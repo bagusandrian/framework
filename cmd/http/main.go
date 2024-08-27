@@ -3,7 +3,7 @@ package main
 import (
 	"log"
 
-	"github.com/bagusandrian/framework/internal/config"
+	"github.com/bagusandrian/framework/internals/config"
 )
 
 var cfgTest bool
@@ -19,29 +19,14 @@ func main() {
 			log.Fatalf("%v", err)
 		}
 	}()
-	log.Default().Println("Starting dummy http")
+	log.Println("Starting dummy http")
 
 	// init config
-	cfg, err := config.New(repoName, config.WithFeatureFlag())
+	cfg, err := config.New(repoName)
 	if err != nil {
 		log.Fatalf("failed to init the config: %v", err)
 	}
 	log.Println("init config done")
-
-	// set panic option
-	// if !env.IsDevelopment() {
-	// 	svcEnv := string(env.ServiceEnv())
-	// 	panics.SetOptions(&panics.Options{
-	// 		Env:             svcEnv,
-	// 		SlackWebhookURL: cfg.SlackWebhook,
-	// 		SlackChannel:    "product-review-alert",
-	// 		CustomMessage:   "@morty-dev",
-	// 		Tags:            map[string]string{"service": appName, "env": svcEnv, "hostname": cfg.Server.HostName, "hostip": cfg.Server.HostIP},
-	// 	})
-	// }
-
-	// init metrics & callwrapper
-	// command to move line
 
 	err = startApp(cfg)
 	if err != nil {

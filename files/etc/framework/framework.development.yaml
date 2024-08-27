@@ -1,0 +1,9 @@
+server:
+  http:
+    port: "9000"
+  grpc:
+    port: "9001"
+  cron:
+    port: "9002"
+  nsq:
+    port: "9003"

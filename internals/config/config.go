@@ -5,11 +5,10 @@ import (
 	"net"
 	"os"
 	"path/filepath"
-	"strings"
-	yaml "gopkg.in/yaml.v2"
-	const "github.com/bagusandrian/framework/internals/constants"
-)
 
+	cons "github.com/bagusandrian/framework/internals/constant"
+	yaml "gopkg.in/yaml.v2"
+)
 
 func New(repoName string) (*Config, error) {
 	filename := getConfigFile(repoName)
@@ -29,8 +28,9 @@ func New(repoName string) (*Config, error) {
 }
 
 type Config struct {
-	Server         Server `yaml:"server"`
+	Server Server `yaml:"server"`
 }
+
 func getHostInfo() (name, ip string) {
 	var err error
 	name, err = os.Hostname()
@@ -57,12 +57,12 @@ func getHostInfo() (name, ip string) {
 // - otherwise /etc/repo_name/repo_name.{TKPENV}.yaml
 func getConfigFile(repoName string) string {
 	var (
-		SysEnv   = os.Getenv("SysEnv")
+		SysEnv   = getEnv()
 		filename = fmt.Sprintf("%s.%s.yaml", repoName, SysEnv)
 	)
 
 	// for non dev env, use config in /etc
-	if SysEnv != const.DevelopmentEnv {
+	if SysEnv != cons.DevelopmentEnv {
 		return filepath.Join("/etc", repoName, string(SysEnv), filename)
 	}
 
@@ -71,7 +71,7 @@ func getConfigFile(repoName string) string {
 	return filepath.Join(repoPath, "files/etc", repoName, filename)
 }
 
-func getEnv() string{
+func getEnv() string {
 	env := os.Getenv("SysEnv")
 	if env == "" {
 		return "development"
