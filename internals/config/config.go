@@ -62,13 +62,15 @@ func getConfigFile(repoName string) string {
 	)
 
 	// for non dev env, use config in /etc
-	if SysEnv != cons.DevelopmentEnv {
-		return filepath.Join("/etc", repoName, string(SysEnv), filename)
+	if SysEnv == cons.TestingEnv {
+		return filepath.Join("/etc", repoName, fmt.Sprintf("%s.%s.yaml", repoName, cons.DevelopmentEnv))
 	}
-
-	// use local files in dev
-	repoPath := filepath.Join(os.Getenv("GOPATH"), "src/github.com/bagusandrian", repoName)
-	return filepath.Join(repoPath, "files/etc", repoName, filename)
+	if SysEnv == cons.DevelopmentEnv || SysEnv == "" {
+		// use local files in dev
+		repoPath := filepath.Join(os.Getenv("GOPATH"), "src/github.com/bagusandrian", repoName)
+		return filepath.Join(repoPath, "files/etc", repoName, filename)
+	}
+	return filepath.Join("/etc", repoName, string(SysEnv), filename)
 }
 
 func getEnv() string {
