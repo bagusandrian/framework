@@ -12,9 +12,9 @@ services:
     image: postgres:13
     restart: always
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: zuruck
-      POSTGRES_DB: document_platform_db
+      POSTGRES_USER: framework_user
+      POSTGRES_PASSWORD: framework_password
+      POSTGRES_DB: framework_db
     volumes:
       - db-data:/var/lib/postgresql/data
 volumes:
