@@ -1,0 +1,15 @@
+server:
+  http:
+    address: ":9000"
+  grpc:
+    address: ":8090"
+    metrics_address: ":8091"
+  cron:
+    metrics_address: ":7070"
+  nsq:
+    metrics_address: ":6060"
+log:
+  level: info
+  error_path: ./log/error.log # classic logging, log not streamed
+  debug_path: ./log/debug.log # classic logging, log not streamed
+  caller: false
